@@ -8,7 +8,7 @@ For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-package TemplateModule;
+package Weather;
 
 import com.rti.dds.cdr.CdrEncapsulation;
 import com.rti.dds.cdr.CdrInputStream;
@@ -41,19 +41,19 @@ import com.rti.dds.infrastructure.Copyable;
 
 /**
 * A collection of useful methods for dealing with objects of type
-* StructA
+* WeatherLocation
 */
 
-public class StructATypeSupport extends TypeSupportImpl {
+public class WeatherLocationTypeSupport extends TypeSupportImpl {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final String TYPE_NAME = "TemplateModule::StructA";
+    private static final String TYPE_NAME = "Weather::WeatherLocation";
 
     private static final char[] PLUGIN_VERSION = {2, 0, 0, 0};     
-    private static final StructATypeSupport _singleton
-    = new StructATypeSupport();
+    private static final WeatherLocationTypeSupport _singleton
+    = new WeatherLocationTypeSupport();
 
     // -----------------------------------------------------------------------
     // Public Methods
@@ -82,34 +82,34 @@ public class StructATypeSupport extends TypeSupportImpl {
     * They should be used directly or modified only by advanced users and are
     * subject to change in future versions of RTI Connext.
     */
-    public static StructATypeSupport get_instance() {
+    public static WeatherLocationTypeSupport get_instance() {
         return _singleton;
     }
 
-    public static StructATypeSupport getInstance() {
+    public static WeatherLocationTypeSupport getInstance() {
         return get_instance();
     }
 
     public static TypeCode getTypeCode(){
-        return StructATypeCode.VALUE;
+        return WeatherLocationTypeCode.VALUE;
     }
 
     public Object create_data() {
-        return StructA.create();
+        return WeatherLocation.create();
     }
 
     public void destroy_data(Object data) {
         return;
     }
     public Object create_key() {
-        return new StructA();
+        return new WeatherLocation();
     }
 
     public void destroy_key(Object key) {
         return;
     }
     public Class get_type() {
-        return StructA.class;
+        return WeatherLocation.class;
     }
 
     /**
@@ -122,13 +122,13 @@ public class StructATypeSupport extends TypeSupportImpl {
     * @exception NullPointerException If <code>destination</code> or 
     * <code>source</code> is null.
     * @exception ClassCastException If either <code>destination</code> or
-    * <code>this</code> is not a <code>StructA</code>
+    * <code>this</code> is not a <code>WeatherLocation</code>
     * type.
     */
     public Object copy_data(Object destination, Object source) {
 
-        StructA typedDst = (StructA) destination;
-        StructA typedSrc = (StructA) source;
+        WeatherLocation typedDst = (WeatherLocation) destination;
+        WeatherLocation typedSrc = (WeatherLocation) source;
 
         return typedDst.copy_from(typedSrc);
 
@@ -150,6 +150,9 @@ public class StructATypeSupport extends TypeSupportImpl {
             origAlignment = 0;
         } 
 
+        currentAlignment += DataModel.LocationTypeTypeSupport.get_instance().get_serialized_sample_max_size(endpoint_data,false,encapsulation_id,currentAlignment);
+
+        currentAlignment += CdrPrimitiveType.DOUBLE.getMaxSizeSerialized(currentAlignment) ;
         currentAlignment += CdrPrimitiveType.DOUBLE.getMaxSizeSerialized(currentAlignment) ;
         if (include_encapsulation) {
             currentAlignment += encapsulation_size;
@@ -174,6 +177,8 @@ public class StructATypeSupport extends TypeSupportImpl {
             origAlignment = 0;
         } 
 
+        currentAlignment += DataModel.LocationTypeTypeSupport.get_instance().get_serialized_sample_min_size(endpoint_data,false,encapsulation_id,currentAlignment);
+        currentAlignment +=CdrPrimitiveType.DOUBLE.getMaxSizeSerialized(currentAlignment) ;
         currentAlignment +=CdrPrimitiveType.DOUBLE.getMaxSizeSerialized(currentAlignment) ;
 
         if (include_encapsulation) {
@@ -189,7 +194,7 @@ public class StructATypeSupport extends TypeSupportImpl {
         Object sample) 
     {
 
-        StructA typedSrc = (StructA) sample;
+        WeatherLocation typedSrc = (WeatherLocation) sample;
         DefaultEndpointData epd = ((DefaultEndpointData) endpoint_data) ;
         long origAlignment = currentAlignment;
         long encapsulation_size = currentAlignment;
@@ -206,6 +211,11 @@ public class StructATypeSupport extends TypeSupportImpl {
             origAlignment = 0;
             epd.setBaseAlignment(currentAlignment);
         } 
+
+        currentAlignment += DataModel.LocationTypeTypeSupport.get_instance().get_serialized_sample_size(
+            endpoint_data, false, encapsulation_id, currentAlignment, sample);
+
+        currentAlignment  +=  CdrPrimitiveType.DOUBLE.getMaxSizeSerialized(epd.getAlignment(currentAlignment));
 
         currentAlignment  +=  CdrPrimitiveType.DOUBLE.getMaxSizeSerialized(epd.getAlignment(currentAlignment));
 
@@ -258,9 +268,13 @@ public class StructATypeSupport extends TypeSupportImpl {
 
         if(serialize_sample) {
 
-            StructA typedSrc = (StructA) src;
+            WeatherLocation typedSrc = (WeatherLocation) src;
 
-            dst.writeDouble(typedSrc.foo);
+            DataModel.LocationTypeTypeSupport.get_instance().serialize(endpoint_data,src,dst,false,encapsulation_id,serialize_sample,endpoint_plugin_qos);
+
+            dst.writeDouble(typedSrc.lat);
+
+            dst.writeDouble(typedSrc.longi);
         }
 
         if (serialize_encapsulation) {
@@ -271,7 +285,7 @@ public class StructATypeSupport extends TypeSupportImpl {
     public long serialize_to_cdr_buffer(
         byte[] buffer,
         long length,
-        StructA src)
+        WeatherLocation src)
     {
         return super.serialize_to_cdr_buffer(buffer,length,src);
     }
@@ -295,7 +309,7 @@ public class StructATypeSupport extends TypeSupportImpl {
 
         if (serialize_key) {
 
-            StructA typedSrc = (StructA) src;    
+            WeatherLocation typedSrc = (WeatherLocation) src;    
             serialize(endpoint_data, src, dst, false, CdrEncapsulation.CDR_ENCAPSULATION_ID_CDR_BE, true, endpoint_plugin_qos);
 
         }
@@ -322,10 +336,13 @@ public class StructATypeSupport extends TypeSupportImpl {
 
         if(deserialize_sample) {
 
-            StructA typedDst = (StructA) dst;
+            WeatherLocation typedDst = (WeatherLocation) dst;
             typedDst.clear();      
+            DataModel.LocationTypeTypeSupport.get_instance().deserialize_sample(endpoint_data,dst,src,false,deserialize_sample,endpoint_plugin_qos);
+
             try{
-                typedDst.foo = src.readDouble();
+                typedDst.lat = src.readDouble();
+                typedDst.longi = src.readDouble();
             } catch (IllegalCdrStateException stateEx) {
                 if (src.available() >= CdrEncapsulation.CDR_ENCAPSULATION_PARAMETER_ID_ALIGNMENT) {
                     throw new RETCODE_ERROR("Error deserializing sample! Remainder: " + src.available() + "\n" +
@@ -344,7 +361,7 @@ public class StructATypeSupport extends TypeSupportImpl {
     }
 
     public void deserialize_from_cdr_buffer(
-        StructA dst,
+        WeatherLocation dst,
         byte[] buffer,
         long length) 
     {
@@ -352,14 +369,14 @@ public class StructATypeSupport extends TypeSupportImpl {
     }
 
     public String data_to_string(
-        StructA sample,
+        WeatherLocation sample,
         PrintFormatProperty property) 
     {
         return super.data_to_string(sample, property);
     }
 
     public String data_to_string(
-        StructA sample) 
+        WeatherLocation sample) 
     {
         return super.data_to_string(sample);
     }
@@ -382,7 +399,7 @@ public class StructATypeSupport extends TypeSupportImpl {
 
         if(deserialize_key) {
 
-            StructA typedDst = (StructA) dst;
+            WeatherLocation typedDst = (WeatherLocation) dst;
 
             deserialize_sample(endpoint_data, dst, src, false, true, endpoint_plugin_qos);
 
@@ -409,6 +426,9 @@ public class StructATypeSupport extends TypeSupportImpl {
         }
 
         if (skip_sample) {
+
+            DataModel.LocationTypeTypeSupport.get_instance().skip(endpoint_data, src, false, true, endpoint_plugin_qos);
+            src.skipDouble();
 
             src.skipDouble();
 
@@ -438,7 +458,7 @@ public class StructATypeSupport extends TypeSupportImpl {
 
         if (deserialize_key) {
 
-            StructA typedDst = (StructA) sample;
+            WeatherLocation typedDst = (WeatherLocation) sample;
 
             deserialize_sample(
                 endpoint_data, sample, src, false,
@@ -489,14 +509,14 @@ public class StructATypeSupport extends TypeSupportImpl {
     protected DataWriter create_datawriter(long native_writer,
     DataWriterListener listener,
     int mask) {
-        return new StructADataWriter (native_writer, listener, mask, this);            
+        return new WeatherLocationDataWriter (native_writer, listener, mask, this);            
     }
 
     protected DataReader create_datareader(long native_reader,
     DataReaderListener listener,
     int mask) {
 
-        return new StructADataReader(native_reader, listener, mask, this);   
+        return new WeatherLocationDataReader(native_reader, listener, mask, this);   
 
     }
 
@@ -504,19 +524,19 @@ public class StructATypeSupport extends TypeSupportImpl {
     // Constructor
     // -----------------------------------------------------------------------
 
-    protected StructATypeSupport() {
+    protected WeatherLocationTypeSupport() {
 
         /* If the user data type supports keys, then the second argument
         to the constructor below should be true.  Otherwise it should
         be false. */        
 
-        super(TYPE_NAME, false,StructATypeCode.VALUE,StructA.class,TypeSupportType.TST_STRUCT, PLUGIN_VERSION);
+        super(TYPE_NAME, false,WeatherLocationTypeCode.VALUE,WeatherLocation.class,TypeSupportType.TST_STRUCT, PLUGIN_VERSION);
 
     }
 
-    protected StructATypeSupport (boolean enableKeySupport) {
+    protected WeatherLocationTypeSupport (boolean enableKeySupport) {
 
-        super(TYPE_NAME, enableKeySupport,StructATypeCode.VALUE,StructA.class,TypeSupportType.TST_STRUCT, PLUGIN_VERSION);
+        super(TYPE_NAME, enableKeySupport,WeatherLocationTypeCode.VALUE,WeatherLocation.class,TypeSupportType.TST_STRUCT, PLUGIN_VERSION);
     }
 }
 

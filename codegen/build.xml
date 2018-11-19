@@ -15,15 +15,15 @@
  	ant
  	
  To run subscriber, type:
- 	ant StructBSubscriber
+ 	ant TemperatureSubscriber
  	
  To run publisher, type:
- 	ant StructBPublisher
+ 	ant TemperaturePublisher
  	
  Note: This ant file is only meant to build our example applications and
        may require alterations to build on your system.
 -->
-<project name="StructB Example" default="compile" basedir=".">
+<project name="Temperature Example" default="compile" basedir=".">
 	<!-- Set properties -->
 	<property environment="env"/>
 
@@ -48,7 +48,7 @@
 	<!-- Build examples -->
 	<target name="compile">
 		<javac srcdir="." destdir="." includeantruntime="false" classpathref="build.classpath.release" />
-		<jar destfile="StructBExample.jar"
+		<jar destfile="TemperatureExample.jar"
 			basedir="."
 			includes="**/*.class">
 		</jar>
@@ -56,15 +56,15 @@
 	
 	<target name="compile-debug">
 		<javac srcdir="." destdir="." includeantruntime="false" classpathref="build.classpath.debug" debug="on"/>
-		<jar destfile="StructBExample-debug.jar"
+		<jar destfile="TemperatureExample-debug.jar"
 			basedir="."
 			includes="**/*.class">
 		</jar>
 	</target>
 	
 	<!-- Run release subscriber -->
-	<target name="StructBSubscriber" depends="compile">
-		<java fork="true" failonerror="yes" classpathref="build.classpath.release" classpath="StructBExample.jar" classname="TemplateModule.StructBSubscriber">
+	<target name="TemperatureSubscriber" depends="compile">
+		<java fork="true" failonerror="yes" classpathref="build.classpath.release" classpath="TemperatureExample.jar" classname="Weather.TemperatureSubscriber">
 			<env key="PATH" path="${env.PATH};${env.NDDSHOME}/lib/x64Win64VS2017"/>
 			<arg value="0" description="Domain"/>
 			<arg value="0" description="Max loop count"/>
@@ -72,8 +72,8 @@
 	</target>
 	
 	<!-- Run release publisher -->
-	<target name="StructBPublisher" depends="compile">
-		<java fork="true" failonerror="yes" classpathref="build.classpath.release" classpath="StructBExample.jar" classname="TemplateModule.StructBPublisher">
+	<target name="TemperaturePublisher" depends="compile">
+		<java fork="true" failonerror="yes" classpathref="build.classpath.release" classpath="TemperatureExample.jar" classname="Weather.TemperaturePublisher">
 			<env key="PATH" path="${env.PATH};${env.NDDSHOME}/lib/x64Win64VS2017"/>
 			<arg value="0" description="Domain"/>
 			<arg value="0" description="Max loop count"/>
@@ -81,8 +81,8 @@
 	</target>
 	
 	<!-- Run debug subscriber -->
-	<target name="StructBSubscriber-debug" depends="compile-debug">
-		<java fork="true" failonerror="yes" classpathref="build.classpath.debug" classpath="StructBExample-debug.jar" classname="TemplateModule.StructBSubscriber">
+	<target name="TemperatureSubscriber-debug" depends="compile-debug">
+		<java fork="true" failonerror="yes" classpathref="build.classpath.debug" classpath="TemperatureExample-debug.jar" classname="Weather.TemperatureSubscriber">
 			<env key="PATH" path="${env.PATH};${env.NDDSHOME}/lib/x64Win64VS2017"/>
 			<arg value="0" description="Domain"/>
 			<arg value="0" description="Max loop count"/>
@@ -90,8 +90,8 @@
 	</target>
 	
 	<!-- Run debug publisher -->
-	<target name="StructBPublisher-debug" depends="compile-debug">
-		<java fork="true" failonerror="yes" classpathref="build.classpath.debug" classpath="StructBExample-debug.jar" classname="TemplateModule.StructBPublisher">
+	<target name="TemperaturePublisher-debug" depends="compile-debug">
+		<java fork="true" failonerror="yes" classpathref="build.classpath.debug" classpath="TemperatureExample-debug.jar" classname="Weather.TemperaturePublisher">
 			<env key="PATH" path="${env.PATH};${env.NDDSHOME}/lib/x64Win64VS2017"/>
 			<arg value="0" description="Domain"/>
 			<arg value="0" description="Max loop count"/>

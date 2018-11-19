@@ -8,7 +8,7 @@ For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-package TemplateModule;
+package DataModel;
 
 import com.rti.dds.cdr.CdrEncapsulation;
 import com.rti.dds.cdr.CdrInputStream;
@@ -41,19 +41,19 @@ import com.rti.dds.infrastructure.Copyable;
 
 /**
 * A collection of useful methods for dealing with objects of type
-* StructB
+* Data
 */
 
-public class StructBTypeSupport extends TypeSupportImpl {
+public class DataTypeSupport extends TypeSupportImpl {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final String TYPE_NAME = "TemplateModule::StructB";
+    private static final String TYPE_NAME = "DataModel::Data";
 
     private static final char[] PLUGIN_VERSION = {2, 0, 0, 0};     
-    private static final StructBTypeSupport _singleton
-    = new StructBTypeSupport();
+    private static final DataTypeSupport _singleton
+    = new DataTypeSupport();
 
     // -----------------------------------------------------------------------
     // Public Methods
@@ -82,34 +82,34 @@ public class StructBTypeSupport extends TypeSupportImpl {
     * They should be used directly or modified only by advanced users and are
     * subject to change in future versions of RTI Connext.
     */
-    public static StructBTypeSupport get_instance() {
+    public static DataTypeSupport get_instance() {
         return _singleton;
     }
 
-    public static StructBTypeSupport getInstance() {
+    public static DataTypeSupport getInstance() {
         return get_instance();
     }
 
     public static TypeCode getTypeCode(){
-        return StructBTypeCode.VALUE;
+        return DataTypeCode.VALUE;
     }
 
     public Object create_data() {
-        return StructB.create();
+        return Data.create();
     }
 
     public void destroy_data(Object data) {
         return;
     }
     public Object create_key() {
-        return new StructB();
+        return new Data();
     }
 
     public void destroy_key(Object key) {
         return;
     }
     public Class get_type() {
-        return StructB.class;
+        return Data.class;
     }
 
     /**
@@ -122,13 +122,13 @@ public class StructBTypeSupport extends TypeSupportImpl {
     * @exception NullPointerException If <code>destination</code> or 
     * <code>source</code> is null.
     * @exception ClassCastException If either <code>destination</code> or
-    * <code>this</code> is not a <code>StructB</code>
+    * <code>this</code> is not a <code>Data</code>
     * type.
     */
     public Object copy_data(Object destination, Object source) {
 
-        StructB typedDst = (StructB) destination;
-        StructB typedSrc = (StructB) source;
+        Data typedDst = (Data) destination;
+        Data typedSrc = (Data) source;
 
         return typedDst.copy_from(typedSrc);
 
@@ -150,8 +150,10 @@ public class StructBTypeSupport extends TypeSupportImpl {
             origAlignment = 0;
         } 
 
-        currentAlignment += CdrPrimitiveType.DOUBLE.getMaxSizeSerialized(currentAlignment) ;
-        currentAlignment +=TemplateModule.StructATypeSupport.get_instance().get_serialized_sample_max_size(endpoint_data,false, encapsulation_id,currentAlignment);
+        currentAlignment +=CdrPrimitiveType.getStringMaxSizeSerialized(currentAlignment, (255)+1);
+        currentAlignment +=DataModel.LocationTypeTypeSupport.get_instance().get_serialized_sample_max_size(endpoint_data,false, encapsulation_id,currentAlignment);
+        currentAlignment +=DataModel.SensorMetaTypeTypeSupport.get_instance().get_serialized_sample_max_size(endpoint_data,false, encapsulation_id,currentAlignment);
+        currentAlignment += CdrPrimitiveType.BOOLEAN.getMaxSizeSerialized(currentAlignment) ;
         if (include_encapsulation) {
             currentAlignment += encapsulation_size;
         }
@@ -175,8 +177,10 @@ public class StructBTypeSupport extends TypeSupportImpl {
             origAlignment = 0;
         } 
 
-        currentAlignment +=CdrPrimitiveType.DOUBLE.getMaxSizeSerialized(currentAlignment) ;
-        currentAlignment += TemplateModule.StructATypeSupport.get_instance().get_serialized_sample_min_size(endpoint_data,false, encapsulation_id,currentAlignment);
+        currentAlignment += CdrPrimitiveType.getStringMaxSizeSerialized(currentAlignment, 1);
+        currentAlignment += DataModel.LocationTypeTypeSupport.get_instance().get_serialized_sample_min_size(endpoint_data,false, encapsulation_id,currentAlignment);
+        currentAlignment += DataModel.SensorMetaTypeTypeSupport.get_instance().get_serialized_sample_min_size(endpoint_data,false, encapsulation_id,currentAlignment);
+        currentAlignment +=CdrPrimitiveType.BOOLEAN.getMaxSizeSerialized(currentAlignment) ;
 
         if (include_encapsulation) {
             currentAlignment += encapsulation_size;
@@ -191,7 +195,7 @@ public class StructBTypeSupport extends TypeSupportImpl {
         Object sample) 
     {
 
-        StructB typedSrc = (StructB) sample;
+        Data typedSrc = (Data) sample;
         DefaultEndpointData epd = ((DefaultEndpointData) endpoint_data) ;
         long origAlignment = currentAlignment;
         long encapsulation_size = currentAlignment;
@@ -209,10 +213,15 @@ public class StructBTypeSupport extends TypeSupportImpl {
             epd.setBaseAlignment(currentAlignment);
         } 
 
-        currentAlignment  +=  CdrPrimitiveType.DOUBLE.getMaxSizeSerialized(epd.getAlignment(currentAlignment));
+        currentAlignment  +=  CdrPrimitiveType.getStringSerializedSize(epd.getAlignment(currentAlignment), typedSrc.timestamp );
 
-        currentAlignment += TemplateModule.StructATypeSupport.get_instance().get_serialized_sample_size(
-            endpoint_data,false,encapsulation_id,currentAlignment,typedSrc.bar);
+        currentAlignment += DataModel.LocationTypeTypeSupport.get_instance().get_serialized_sample_size(
+            endpoint_data,false,encapsulation_id,currentAlignment,typedSrc.location);
+
+        currentAlignment += DataModel.SensorMetaTypeTypeSupport.get_instance().get_serialized_sample_size(
+            endpoint_data,false,encapsulation_id,currentAlignment,typedSrc.sensorMeta);
+
+        currentAlignment  +=  CdrPrimitiveType.BOOLEAN.getMaxSizeSerialized(epd.getAlignment(currentAlignment));
 
         if (include_encapsulation) {
             currentAlignment += encapsulation_size;
@@ -263,11 +272,15 @@ public class StructBTypeSupport extends TypeSupportImpl {
 
         if(serialize_sample) {
 
-            StructB typedSrc = (StructB) src;
+            Data typedSrc = (Data) src;
 
-            dst.writeDouble(typedSrc.foo);
+            dst.writeString(typedSrc.timestamp,255);
 
-            TemplateModule.StructATypeSupport.get_instance().serialize(endpoint_data, typedSrc.bar, dst, false, encapsulation_id,true,endpoint_plugin_qos);
+            DataModel.LocationTypeTypeSupport.get_instance().serialize(endpoint_data, typedSrc.location, dst, false, encapsulation_id,true,endpoint_plugin_qos);
+
+            DataModel.SensorMetaTypeTypeSupport.get_instance().serialize(endpoint_data, typedSrc.sensorMeta, dst, false, encapsulation_id,true,endpoint_plugin_qos);
+
+            dst.writeBoolean(typedSrc.isValid);
         }
 
         if (serialize_encapsulation) {
@@ -278,7 +291,7 @@ public class StructBTypeSupport extends TypeSupportImpl {
     public long serialize_to_cdr_buffer(
         byte[] buffer,
         long length,
-        StructB src)
+        Data src)
     {
         return super.serialize_to_cdr_buffer(buffer,length,src);
     }
@@ -302,7 +315,7 @@ public class StructBTypeSupport extends TypeSupportImpl {
 
         if (serialize_key) {
 
-            StructB typedSrc = (StructB) src;    
+            Data typedSrc = (Data) src;    
             serialize(endpoint_data, src, dst, false, CdrEncapsulation.CDR_ENCAPSULATION_ID_CDR_BE, true, endpoint_plugin_qos);
 
         }
@@ -329,11 +342,13 @@ public class StructBTypeSupport extends TypeSupportImpl {
 
         if(deserialize_sample) {
 
-            StructB typedDst = (StructB) dst;
+            Data typedDst = (Data) dst;
             typedDst.clear();      
             try{
-                typedDst.foo = src.readDouble();
-                typedDst.bar = (TemplateModule.StructA)TemplateModule.StructATypeSupport.get_instance().deserialize_sample(endpoint_data, typedDst.bar, src, false, true, endpoint_plugin_qos);     
+                typedDst.timestamp = src.readString(255);
+                typedDst.location = (DataModel.LocationType)DataModel.LocationTypeTypeSupport.get_instance().deserialize_sample(endpoint_data, typedDst.location, src, false, true, endpoint_plugin_qos);     
+                typedDst.sensorMeta = (DataModel.SensorMetaType)DataModel.SensorMetaTypeTypeSupport.get_instance().deserialize_sample(endpoint_data, typedDst.sensorMeta, src, false, true, endpoint_plugin_qos);     
+                typedDst.isValid = src.readBoolean();
             } catch (IllegalCdrStateException stateEx) {
                 if (src.available() >= CdrEncapsulation.CDR_ENCAPSULATION_PARAMETER_ID_ALIGNMENT) {
                     throw new RETCODE_ERROR("Error deserializing sample! Remainder: " + src.available() + "\n" +
@@ -352,7 +367,7 @@ public class StructBTypeSupport extends TypeSupportImpl {
     }
 
     public void deserialize_from_cdr_buffer(
-        StructB dst,
+        Data dst,
         byte[] buffer,
         long length) 
     {
@@ -360,14 +375,14 @@ public class StructBTypeSupport extends TypeSupportImpl {
     }
 
     public String data_to_string(
-        StructB sample,
+        Data sample,
         PrintFormatProperty property) 
     {
         return super.data_to_string(sample, property);
     }
 
     public String data_to_string(
-        StructB sample) 
+        Data sample) 
     {
         return super.data_to_string(sample);
     }
@@ -390,7 +405,7 @@ public class StructBTypeSupport extends TypeSupportImpl {
 
         if(deserialize_key) {
 
-            StructB typedDst = (StructB) dst;
+            Data typedDst = (Data) dst;
 
             deserialize_sample(endpoint_data, dst, src, false, true, endpoint_plugin_qos);
 
@@ -418,9 +433,13 @@ public class StructBTypeSupport extends TypeSupportImpl {
 
         if (skip_sample) {
 
-            src.skipDouble();
+            src.skipString();
 
-            TemplateModule.StructATypeSupport.get_instance().skip(endpoint_data, src, false, true, endpoint_plugin_qos);
+            DataModel.LocationTypeTypeSupport.get_instance().skip(endpoint_data, src, false, true, endpoint_plugin_qos);
+
+            DataModel.SensorMetaTypeTypeSupport.get_instance().skip(endpoint_data, src, false, true, endpoint_plugin_qos);
+
+            src.skipBoolean();
 
         }
 
@@ -448,7 +467,7 @@ public class StructBTypeSupport extends TypeSupportImpl {
 
         if (deserialize_key) {
 
-            StructB typedDst = (StructB) sample;
+            Data typedDst = (Data) sample;
 
             deserialize_sample(
                 endpoint_data, sample, src, false,
@@ -499,14 +518,14 @@ public class StructBTypeSupport extends TypeSupportImpl {
     protected DataWriter create_datawriter(long native_writer,
     DataWriterListener listener,
     int mask) {
-        return new StructBDataWriter (native_writer, listener, mask, this);            
+        return new DataDataWriter (native_writer, listener, mask, this);            
     }
 
     protected DataReader create_datareader(long native_reader,
     DataReaderListener listener,
     int mask) {
 
-        return new StructBDataReader(native_reader, listener, mask, this);   
+        return new DataDataReader(native_reader, listener, mask, this);   
 
     }
 
@@ -514,19 +533,19 @@ public class StructBTypeSupport extends TypeSupportImpl {
     // Constructor
     // -----------------------------------------------------------------------
 
-    protected StructBTypeSupport() {
+    protected DataTypeSupport() {
 
         /* If the user data type supports keys, then the second argument
         to the constructor below should be true.  Otherwise it should
         be false. */        
 
-        super(TYPE_NAME, false,StructBTypeCode.VALUE,StructB.class,TypeSupportType.TST_STRUCT, PLUGIN_VERSION);
+        super(TYPE_NAME, false,DataTypeCode.VALUE,Data.class,TypeSupportType.TST_STRUCT, PLUGIN_VERSION);
 
     }
 
-    protected StructBTypeSupport (boolean enableKeySupport) {
+    protected DataTypeSupport (boolean enableKeySupport) {
 
-        super(TYPE_NAME, enableKeySupport,StructBTypeCode.VALUE,StructB.class,TypeSupportType.TST_STRUCT, PLUGIN_VERSION);
+        super(TYPE_NAME, enableKeySupport,DataTypeCode.VALUE,Data.class,TypeSupportType.TST_STRUCT, PLUGIN_VERSION);
     }
 }
 

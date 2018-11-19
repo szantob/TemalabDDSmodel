@@ -8,11 +8,11 @@ For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-package TemplateModule;
+package DataModel;
 
 import com.rti.dds.typecode.*;
 
-public class  StructBTypeCode {
+public class  SensorMetaTypeTypeCode {
     public static final TypeCode VALUE = getTypeCode();
 
     private static TypeCode getTypeCode() {
@@ -20,10 +20,10 @@ public class  StructBTypeCode {
         int __i=0;
         StructMember sm[]=new StructMember[2];
 
-        sm[__i]=new  StructMember("foo", false, (short)-1,  false,(TypeCode) TypeCode.TC_DOUBLE,0 , false);__i++;
-        sm[__i]=new  StructMember("bar", false, (short)-1,  false,(TypeCode) TemplateModule.StructATypeCode.VALUE,1 , false);__i++;
+        sm[__i]=new  StructMember("updateFreq", false, (short)-1,  false,(TypeCode) TypeCode.TC_ULONG,0 , false);__i++;
+        sm[__i]=new  StructMember("sensorName", false, (short)-1,  false,(TypeCode) new TypeCode(TCKind.TK_STRING,255),1 , false);__i++;
 
-        tc = TypeCodeFactory.TheTypeCodeFactory.create_struct_tc("TemplateModule::StructB",ExtensibilityKind.EXTENSIBLE_EXTENSIBILITY,  sm);        
+        tc = TypeCodeFactory.TheTypeCodeFactory.create_struct_tc("DataModel::SensorMetaType",ExtensibilityKind.EXTENSIBLE_EXTENSIBILITY,  sm);        
         return tc;
     }
 }

@@ -29,7 +29,7 @@ endif
 JAVA_PATH = java
 JAVAC_PATH = javac
 
-JAVA_SOURCES = $(SOURCE_DIR)./TemplateModule/StructA.java $(SOURCE_DIR)./TemplateModule/StructASeq.java $(SOURCE_DIR)./TemplateModule/StructATypeSupport.java $(SOURCE_DIR)./TemplateModule/StructATypeCode.java $(SOURCE_DIR)./TemplateModule/StructADataReader.java $(SOURCE_DIR)./TemplateModule/StructADataWriter.java $(SOURCE_DIR)./TemplateModule/StructB.java $(SOURCE_DIR)./TemplateModule/StructBSeq.java $(SOURCE_DIR)./TemplateModule/StructBTypeSupport.java $(SOURCE_DIR)./TemplateModule/StructBTypeCode.java $(SOURCE_DIR)./TemplateModule/StructBDataReader.java $(SOURCE_DIR)./TemplateModule/StructBDataWriter.java $(SOURCE_DIR)./TemplateModule/StructBSubscriber.java $(SOURCE_DIR)./TemplateModule/StructBPublisher.java
+JAVA_SOURCES = $(SOURCE_DIR)./DataModel/LocationType.java $(SOURCE_DIR)./DataModel/LocationTypeSeq.java $(SOURCE_DIR)./DataModel/LocationTypeTypeSupport.java $(SOURCE_DIR)./DataModel/LocationTypeTypeCode.java $(SOURCE_DIR)./DataModel/LocationTypeDataReader.java $(SOURCE_DIR)./DataModel/LocationTypeDataWriter.java $(SOURCE_DIR)./DataModel/SensorMetaType.java $(SOURCE_DIR)./DataModel/SensorMetaTypeSeq.java $(SOURCE_DIR)./DataModel/SensorMetaTypeTypeSupport.java $(SOURCE_DIR)./DataModel/SensorMetaTypeTypeCode.java $(SOURCE_DIR)./DataModel/SensorMetaTypeDataReader.java $(SOURCE_DIR)./DataModel/SensorMetaTypeDataWriter.java $(SOURCE_DIR)./DataModel/Data.java $(SOURCE_DIR)./DataModel/DataSeq.java $(SOURCE_DIR)./DataModel/DataTypeSupport.java $(SOURCE_DIR)./DataModel/DataTypeCode.java $(SOURCE_DIR)./DataModel/DataDataReader.java $(SOURCE_DIR)./DataModel/DataDataWriter.java $(SOURCE_DIR)./Weather/WeatherLocation.java $(SOURCE_DIR)./Weather/WeatherLocationSeq.java $(SOURCE_DIR)./Weather/WeatherLocationTypeSupport.java $(SOURCE_DIR)./Weather/WeatherLocationTypeCode.java $(SOURCE_DIR)./Weather/WeatherLocationDataReader.java $(SOURCE_DIR)./Weather/WeatherLocationDataWriter.java $(SOURCE_DIR)./Weather/Weather.java $(SOURCE_DIR)./Weather/WeatherSeq.java $(SOURCE_DIR)./Weather/WeatherTypeSupport.java $(SOURCE_DIR)./Weather/WeatherTypeCode.java $(SOURCE_DIR)./Weather/WeatherDataReader.java $(SOURCE_DIR)./Weather/WeatherDataWriter.java $(SOURCE_DIR)./Weather/Temperature.java $(SOURCE_DIR)./Weather/TemperatureSeq.java $(SOURCE_DIR)./Weather/TemperatureTypeSupport.java $(SOURCE_DIR)./Weather/TemperatureTypeCode.java $(SOURCE_DIR)./Weather/TemperatureDataReader.java $(SOURCE_DIR)./Weather/TemperatureDataWriter.java $(SOURCE_DIR)./Weather/TemperatureSubscriber.java $(SOURCE_DIR)./Weather/TemperaturePublisher.java
 CLASS_FILES  = $(JAVA_SOURCES:%.java=%.class)
 
 RTI_CLASSPATH := $(NDDSHOME)/lib/java/nddsjava.jar
@@ -45,8 +45,8 @@ all: $(CLASS_FILES)
 
 export PATH := $(NDDSHOME)/lib/x64Win64VS2017;$(PATH)
 
-StructBPublisher: ./TemplateModule/StructBPublisher.class
-	$(JAVA_PATH)  -classpath ".;$(RTI_CLASSPATH)" TemplateModule.StructBPublisher $(ARGS)
+TemperaturePublisher: ./Weather/TemperaturePublisher.class
+	$(JAVA_PATH)  -classpath ".;$(RTI_CLASSPATH)" Weather.TemperaturePublisher $(ARGS)
  
-StructBSubscriber: ./TemplateModule/StructBSubscriber.class
-	$(JAVA_PATH)  -classpath ".;$(RTI_CLASSPATH)" TemplateModule.StructBSubscriber $(ARGS)
+TemperatureSubscriber: ./Weather/TemperatureSubscriber.class
+	$(JAVA_PATH)  -classpath ".;$(RTI_CLASSPATH)" Weather.TemperatureSubscriber $(ARGS)

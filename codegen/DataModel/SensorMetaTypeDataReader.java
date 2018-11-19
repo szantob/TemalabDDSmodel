@@ -9,7 +9,7 @@ For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-package TemplateModule;
+package DataModel;
 
 import com.rti.dds.infrastructure.InstanceHandle_t;
 import com.rti.dds.subscription.DataReaderImpl;
@@ -22,28 +22,28 @@ import com.rti.dds.topic.TypeSupportImpl;
 // ===========================================================================
 
 /**
-* A reader for the StructB user type.
+* A reader for the SensorMetaType user type.
 */
-public class StructBDataReader extends DataReaderImpl {
+public class SensorMetaTypeDataReader extends DataReaderImpl {
     // -----------------------------------------------------------------------
     // Public Methods
     // -----------------------------------------------------------------------
 
-    public void read(StructBSeq received_data, SampleInfoSeq info_seq,
+    public void read(SensorMetaTypeSeq received_data, SampleInfoSeq info_seq,
     int max_samples,
     int sample_states, int view_states, int instance_states) {
         read_untyped(received_data, info_seq, max_samples, sample_states,
         view_states, instance_states);
     }
 
-    public void take(StructBSeq received_data, SampleInfoSeq info_seq,
+    public void take(SensorMetaTypeSeq received_data, SampleInfoSeq info_seq,
     int max_samples,
     int sample_states, int view_states, int instance_states) {
         take_untyped(received_data, info_seq, max_samples, sample_states,
         view_states, instance_states);
     }
 
-    public void read_w_condition(StructBSeq received_data, 
+    public void read_w_condition(SensorMetaTypeSeq received_data, 
     SampleInfoSeq info_seq,
     int max_samples,
     ReadCondition condition) {
@@ -51,7 +51,7 @@ public class StructBDataReader extends DataReaderImpl {
         condition);
     }
 
-    public void take_w_condition(StructBSeq received_data, 
+    public void take_w_condition(SensorMetaTypeSeq received_data, 
     SampleInfoSeq info_seq,
     int max_samples,
     ReadCondition condition) {
@@ -59,15 +59,15 @@ public class StructBDataReader extends DataReaderImpl {
         condition);
     }
 
-    public void read_next_sample(StructB received_data, SampleInfo sample_info) {
+    public void read_next_sample(SensorMetaType received_data, SampleInfo sample_info) {
         read_next_sample_untyped(received_data, sample_info);
     }
 
-    public void take_next_sample(StructB received_data, SampleInfo sample_info) {
+    public void take_next_sample(SensorMetaType received_data, SampleInfo sample_info) {
         take_next_sample_untyped(received_data, sample_info);
     }
 
-    public void read_instance(StructBSeq received_data, SampleInfoSeq info_seq,
+    public void read_instance(SensorMetaTypeSeq received_data, SampleInfoSeq info_seq,
     int max_samples, InstanceHandle_t a_handle, int sample_states,
     int view_states, int instance_states) {
 
@@ -75,7 +75,7 @@ public class StructBDataReader extends DataReaderImpl {
         sample_states, view_states, instance_states);
     }
 
-    public void take_instance(StructBSeq received_data, SampleInfoSeq info_seq,
+    public void take_instance(SensorMetaTypeSeq received_data, SampleInfoSeq info_seq,
     int max_samples, InstanceHandle_t a_handle, int sample_states,
     int view_states, int instance_states) {
 
@@ -83,7 +83,7 @@ public class StructBDataReader extends DataReaderImpl {
         sample_states, view_states, instance_states);
     }
 
-    public void read_instance_w_condition(StructBSeq received_data,
+    public void read_instance_w_condition(SensorMetaTypeSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, ReadCondition condition) {
 
@@ -91,7 +91,7 @@ public class StructBDataReader extends DataReaderImpl {
         max_samples, a_handle, condition);
     }
 
-    public void take_instance_w_condition(StructBSeq received_data,
+    public void take_instance_w_condition(SensorMetaTypeSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, ReadCondition condition) {
 
@@ -99,7 +99,7 @@ public class StructBDataReader extends DataReaderImpl {
         max_samples, a_handle, condition);
     }
 
-    public void read_next_instance(StructBSeq received_data,
+    public void read_next_instance(SensorMetaTypeSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, int sample_states, int view_states,
     int instance_states) {
@@ -108,7 +108,7 @@ public class StructBDataReader extends DataReaderImpl {
         a_handle, sample_states, view_states, instance_states);
     }
 
-    public void take_next_instance(StructBSeq received_data,
+    public void take_next_instance(SensorMetaTypeSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, int sample_states, int view_states,
     int instance_states) {
@@ -117,7 +117,7 @@ public class StructBDataReader extends DataReaderImpl {
         a_handle, sample_states, view_states, instance_states);
     }
 
-    public void read_next_instance_w_condition(StructBSeq received_data,
+    public void read_next_instance_w_condition(SensorMetaTypeSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, ReadCondition condition) {
 
@@ -125,7 +125,7 @@ public class StructBDataReader extends DataReaderImpl {
         max_samples, a_handle, condition);
     }
 
-    public void take_next_instance_w_condition(StructBSeq received_data,
+    public void take_next_instance_w_condition(SensorMetaTypeSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, ReadCondition condition) {
 
@@ -133,15 +133,15 @@ public class StructBDataReader extends DataReaderImpl {
         max_samples, a_handle, condition);
     }
 
-    public void return_loan(StructBSeq received_data, SampleInfoSeq info_seq) {
+    public void return_loan(SensorMetaTypeSeq received_data, SampleInfoSeq info_seq) {
         return_loan_untyped(received_data, info_seq);
     }
 
-    public void get_key_value(StructB key_holder, InstanceHandle_t handle){
+    public void get_key_value(SensorMetaType key_holder, InstanceHandle_t handle){
         get_key_value_untyped(key_holder, handle);
     }
 
-    public InstanceHandle_t lookup_instance(StructB key_holder) {
+    public InstanceHandle_t lookup_instance(SensorMetaType key_holder) {
         return lookup_instance_untyped(key_holder);
     }
 
@@ -151,7 +151,7 @@ public class StructBDataReader extends DataReaderImpl {
 
     // --- Constructors: -----------------------------------------------------
 
-    /*package*/  StructBDataReader (long native_reader, DataReaderListener listener,
+    /*package*/  SensorMetaTypeDataReader (long native_reader, DataReaderListener listener,
     int mask, TypeSupportImpl data_type) {
         super(native_reader, listener, mask, data_type);
     }

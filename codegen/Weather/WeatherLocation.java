@@ -9,21 +9,24 @@ For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-package TemplateModule;
+package Weather;
 
 import com.rti.dds.infrastructure.*;
 import com.rti.dds.infrastructure.Copyable;
 import java.io.Serializable;
 import com.rti.dds.cdr.CdrHelper;
 
-public class StructA   implements Copyable, Serializable{
+public class WeatherLocation  extends DataModel.LocationType implements Copyable, Serializable{
 
-    public double foo= 0;
+    public double lat= 0;
+    public double longi= 0;
 
-    public StructA() {
+    public WeatherLocation() {
+
+        super();
 
     }
-    public StructA (StructA other) {
+    public WeatherLocation (WeatherLocation other) {
 
         this();
         copy_from(other);
@@ -31,8 +34,8 @@ public class StructA   implements Copyable, Serializable{
 
     public static Object create() {
 
-        StructA self;
-        self = new  StructA();
+        WeatherLocation self;
+        self = new  WeatherLocation();
         self.clear();
         return self;
 
@@ -40,7 +43,9 @@ public class StructA   implements Copyable, Serializable{
 
     public void clear() {
 
-        foo= 0;
+        super.clear();
+        lat= 0;
+        longi= 0;
     }
 
     public boolean equals(Object o) {
@@ -49,13 +54,20 @@ public class StructA   implements Copyable, Serializable{
             return false;
         }        
 
+        if (!super.equals(o)) {
+            return false;
+        }
+
         if(getClass() != o.getClass()) {
             return false;
         }
 
-        StructA otherObj = (StructA)o;
+        WeatherLocation otherObj = (WeatherLocation)o;
 
-        if(foo != otherObj.foo) {
+        if(lat != otherObj.lat) {
+            return false;
+        }
+        if(longi != otherObj.longi) {
             return false;
         }
 
@@ -64,14 +76,17 @@ public class StructA   implements Copyable, Serializable{
 
     public int hashCode() {
         int __result = 0;
-        __result += (int)foo;
+
+        __result = super.hashCode();
+        __result += (int)lat;
+        __result += (int)longi;
         return __result;
     }
 
     /**
     * This is the implementation of the <code>Copyable</code> interface.
     * This method will perform a deep copy of <code>src</code>
-    * This method could be placed into <code>StructATypeSupport</code>
+    * This method could be placed into <code>WeatherLocationTypeSupport</code>
     * rather than here by using the <code>-noCopyable</code> option
     * to rtiddsgen.
     * 
@@ -84,10 +99,11 @@ public class StructA   implements Copyable, Serializable{
     */
     public Object copy_from(Object src) {
 
-        StructA typedSrc = (StructA) src;
-        StructA typedDst = this;
-
-        typedDst.foo = typedSrc.foo;
+        WeatherLocation typedSrc = (WeatherLocation) src;
+        WeatherLocation typedDst = this;
+        super.copy_from(typedSrc);
+        typedDst.lat = typedSrc.lat;
+        typedDst.longi = typedSrc.longi;
 
         return this;
     }
@@ -104,8 +120,12 @@ public class StructA   implements Copyable, Serializable{
             strBuffer.append(desc).append(":\n");
         }
 
+        strBuffer.append(super.toString("",indent));
+
         CdrHelper.printIndent(strBuffer, indent+1);        
-        strBuffer.append("foo: ").append(foo).append("\n");  
+        strBuffer.append("lat: ").append(lat).append("\n");  
+        CdrHelper.printIndent(strBuffer, indent+1);        
+        strBuffer.append("longi: ").append(longi).append("\n");  
 
         return strBuffer.toString();
     }

@@ -8,21 +8,21 @@ For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-package TemplateModule;
+package Weather;
 
 import com.rti.dds.typecode.*;
 
-public class  StructATypeCode {
+public class  TemperatureTypeCode {
     public static final TypeCode VALUE = getTypeCode();
 
     private static TypeCode getTypeCode() {
         TypeCode tc = null;
         int __i=0;
-        StructMember sm[]=new StructMember[1];
+        ValueMember sm[]=new ValueMember[1];
 
-        sm[__i]=new  StructMember("foo", false, (short)-1,  false,(TypeCode) TypeCode.TC_DOUBLE,0 , false);__i++;
+        sm[__i]=new  ValueMember("value", false, (short)-1,  false,PUBLIC_MEMBER.VALUE,(TypeCode) TypeCode.TC_DOUBLE,4 , false);__i++;
 
-        tc = TypeCodeFactory.TheTypeCodeFactory.create_struct_tc("TemplateModule::StructA",ExtensibilityKind.EXTENSIBLE_EXTENSIBILITY,  sm);        
+        tc = TypeCodeFactory.TheTypeCodeFactory.create_value_tc("Weather::Temperature",ExtensibilityKind.EXTENSIBLE_EXTENSIBILITY, VM_NONE.VALUE,Weather.WeatherTypeCode.VALUE, sm);        
         return tc;
     }
 }

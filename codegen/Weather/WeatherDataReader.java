@@ -9,7 +9,7 @@ For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-package TemplateModule;
+package Weather;
 
 import com.rti.dds.infrastructure.InstanceHandle_t;
 import com.rti.dds.subscription.DataReaderImpl;
@@ -22,28 +22,28 @@ import com.rti.dds.topic.TypeSupportImpl;
 // ===========================================================================
 
 /**
-* A reader for the StructA user type.
+* A reader for the Weather user type.
 */
-public class StructADataReader extends DataReaderImpl {
+public class WeatherDataReader extends DataReaderImpl {
     // -----------------------------------------------------------------------
     // Public Methods
     // -----------------------------------------------------------------------
 
-    public void read(StructASeq received_data, SampleInfoSeq info_seq,
+    public void read(WeatherSeq received_data, SampleInfoSeq info_seq,
     int max_samples,
     int sample_states, int view_states, int instance_states) {
         read_untyped(received_data, info_seq, max_samples, sample_states,
         view_states, instance_states);
     }
 
-    public void take(StructASeq received_data, SampleInfoSeq info_seq,
+    public void take(WeatherSeq received_data, SampleInfoSeq info_seq,
     int max_samples,
     int sample_states, int view_states, int instance_states) {
         take_untyped(received_data, info_seq, max_samples, sample_states,
         view_states, instance_states);
     }
 
-    public void read_w_condition(StructASeq received_data, 
+    public void read_w_condition(WeatherSeq received_data, 
     SampleInfoSeq info_seq,
     int max_samples,
     ReadCondition condition) {
@@ -51,7 +51,7 @@ public class StructADataReader extends DataReaderImpl {
         condition);
     }
 
-    public void take_w_condition(StructASeq received_data, 
+    public void take_w_condition(WeatherSeq received_data, 
     SampleInfoSeq info_seq,
     int max_samples,
     ReadCondition condition) {
@@ -59,15 +59,15 @@ public class StructADataReader extends DataReaderImpl {
         condition);
     }
 
-    public void read_next_sample(StructA received_data, SampleInfo sample_info) {
+    public void read_next_sample(Weather received_data, SampleInfo sample_info) {
         read_next_sample_untyped(received_data, sample_info);
     }
 
-    public void take_next_sample(StructA received_data, SampleInfo sample_info) {
+    public void take_next_sample(Weather received_data, SampleInfo sample_info) {
         take_next_sample_untyped(received_data, sample_info);
     }
 
-    public void read_instance(StructASeq received_data, SampleInfoSeq info_seq,
+    public void read_instance(WeatherSeq received_data, SampleInfoSeq info_seq,
     int max_samples, InstanceHandle_t a_handle, int sample_states,
     int view_states, int instance_states) {
 
@@ -75,7 +75,7 @@ public class StructADataReader extends DataReaderImpl {
         sample_states, view_states, instance_states);
     }
 
-    public void take_instance(StructASeq received_data, SampleInfoSeq info_seq,
+    public void take_instance(WeatherSeq received_data, SampleInfoSeq info_seq,
     int max_samples, InstanceHandle_t a_handle, int sample_states,
     int view_states, int instance_states) {
 
@@ -83,7 +83,7 @@ public class StructADataReader extends DataReaderImpl {
         sample_states, view_states, instance_states);
     }
 
-    public void read_instance_w_condition(StructASeq received_data,
+    public void read_instance_w_condition(WeatherSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, ReadCondition condition) {
 
@@ -91,7 +91,7 @@ public class StructADataReader extends DataReaderImpl {
         max_samples, a_handle, condition);
     }
 
-    public void take_instance_w_condition(StructASeq received_data,
+    public void take_instance_w_condition(WeatherSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, ReadCondition condition) {
 
@@ -99,7 +99,7 @@ public class StructADataReader extends DataReaderImpl {
         max_samples, a_handle, condition);
     }
 
-    public void read_next_instance(StructASeq received_data,
+    public void read_next_instance(WeatherSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, int sample_states, int view_states,
     int instance_states) {
@@ -108,7 +108,7 @@ public class StructADataReader extends DataReaderImpl {
         a_handle, sample_states, view_states, instance_states);
     }
 
-    public void take_next_instance(StructASeq received_data,
+    public void take_next_instance(WeatherSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, int sample_states, int view_states,
     int instance_states) {
@@ -117,7 +117,7 @@ public class StructADataReader extends DataReaderImpl {
         a_handle, sample_states, view_states, instance_states);
     }
 
-    public void read_next_instance_w_condition(StructASeq received_data,
+    public void read_next_instance_w_condition(WeatherSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, ReadCondition condition) {
 
@@ -125,7 +125,7 @@ public class StructADataReader extends DataReaderImpl {
         max_samples, a_handle, condition);
     }
 
-    public void take_next_instance_w_condition(StructASeq received_data,
+    public void take_next_instance_w_condition(WeatherSeq received_data,
     SampleInfoSeq info_seq, int max_samples,
     InstanceHandle_t a_handle, ReadCondition condition) {
 
@@ -133,15 +133,15 @@ public class StructADataReader extends DataReaderImpl {
         max_samples, a_handle, condition);
     }
 
-    public void return_loan(StructASeq received_data, SampleInfoSeq info_seq) {
+    public void return_loan(WeatherSeq received_data, SampleInfoSeq info_seq) {
         return_loan_untyped(received_data, info_seq);
     }
 
-    public void get_key_value(StructA key_holder, InstanceHandle_t handle){
+    public void get_key_value(Weather key_holder, InstanceHandle_t handle){
         get_key_value_untyped(key_holder, handle);
     }
 
-    public InstanceHandle_t lookup_instance(StructA key_holder) {
+    public InstanceHandle_t lookup_instance(Weather key_holder) {
         return lookup_instance_untyped(key_holder);
     }
 
@@ -151,7 +151,7 @@ public class StructADataReader extends DataReaderImpl {
 
     // --- Constructors: -----------------------------------------------------
 
-    /*package*/  StructADataReader (long native_reader, DataReaderListener listener,
+    /*package*/  WeatherDataReader (long native_reader, DataReaderListener listener,
     int mask, TypeSupportImpl data_type) {
         super(native_reader, listener, mask, data_type);
     }

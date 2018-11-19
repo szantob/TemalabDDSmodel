@@ -9,22 +9,22 @@ For more information, type 'rtiddsgen -help' at a command shell
 or consult the RTI Connext manual.
 */
 
-package TemplateModule;
+package DataModel;
 
 import com.rti.dds.infrastructure.*;
 import com.rti.dds.infrastructure.Copyable;
 import java.io.Serializable;
 import com.rti.dds.cdr.CdrHelper;
 
-public class StructB   implements Copyable, Serializable{
+public class SensorMetaType   implements Copyable, Serializable{
 
-    public double foo= 0;
-    public TemplateModule.StructA bar = (TemplateModule.StructA)TemplateModule.StructA.create();
+    public int updateFreq= 0;
+    public String sensorName=  "" ; /* maximum length = (255) */
 
-    public StructB() {
+    public SensorMetaType() {
 
     }
-    public StructB (StructB other) {
+    public SensorMetaType (SensorMetaType other) {
 
         this();
         copy_from(other);
@@ -32,8 +32,8 @@ public class StructB   implements Copyable, Serializable{
 
     public static Object create() {
 
-        StructB self;
-        self = new  StructB();
+        SensorMetaType self;
+        self = new  SensorMetaType();
         self.clear();
         return self;
 
@@ -41,10 +41,8 @@ public class StructB   implements Copyable, Serializable{
 
     public void clear() {
 
-        foo= 0;
-        if (bar != null) {
-            bar.clear();
-        }
+        updateFreq= 0;
+        sensorName=  ""; 
     }
 
     public boolean equals(Object o) {
@@ -57,12 +55,12 @@ public class StructB   implements Copyable, Serializable{
             return false;
         }
 
-        StructB otherObj = (StructB)o;
+        SensorMetaType otherObj = (SensorMetaType)o;
 
-        if(foo != otherObj.foo) {
+        if(updateFreq != otherObj.updateFreq) {
             return false;
         }
-        if(!bar.equals(otherObj.bar)) {
+        if(!sensorName.equals(otherObj.sensorName)) {
             return false;
         }
 
@@ -71,15 +69,15 @@ public class StructB   implements Copyable, Serializable{
 
     public int hashCode() {
         int __result = 0;
-        __result += (int)foo;
-        __result += bar.hashCode(); 
+        __result += (int)updateFreq;
+        __result += sensorName.hashCode(); 
         return __result;
     }
 
     /**
     * This is the implementation of the <code>Copyable</code> interface.
     * This method will perform a deep copy of <code>src</code>
-    * This method could be placed into <code>StructBTypeSupport</code>
+    * This method could be placed into <code>SensorMetaTypeTypeSupport</code>
     * rather than here by using the <code>-noCopyable</code> option
     * to rtiddsgen.
     * 
@@ -92,11 +90,11 @@ public class StructB   implements Copyable, Serializable{
     */
     public Object copy_from(Object src) {
 
-        StructB typedSrc = (StructB) src;
-        StructB typedDst = this;
+        SensorMetaType typedSrc = (SensorMetaType) src;
+        SensorMetaType typedDst = this;
 
-        typedDst.foo = typedSrc.foo;
-        typedDst.bar = (TemplateModule.StructA) typedDst.bar.copy_from(typedSrc.bar);
+        typedDst.updateFreq = typedSrc.updateFreq;
+        typedDst.sensorName = typedSrc.sensorName;
 
         return this;
     }
@@ -114,8 +112,9 @@ public class StructB   implements Copyable, Serializable{
         }
 
         CdrHelper.printIndent(strBuffer, indent+1);        
-        strBuffer.append("foo: ").append(foo).append("\n");  
-        strBuffer.append(bar.toString("bar ", indent+1));
+        strBuffer.append("updateFreq: ").append(updateFreq).append("\n");  
+        CdrHelper.printIndent(strBuffer, indent+1);        
+        strBuffer.append("sensorName: ").append(sensorName).append("\n");  
 
         return strBuffer.toString();
     }
