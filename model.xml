@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dds version="5.2.0" xsi:noNamespaceSchemaLocation="http://community.rti.com/schema/5.2.0/rti_dds_profiles.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<types xsi:noNamespaceSchemaLocation="file:///C:/Program Files/rti_connext_dds-5.3.1/bin/../resource/app/app_support/rtiddsgen/schema/rti_dds_topic_types.xsd">
+		<!--Package -->
+		<module name="TemplateModule">
+			<struct name= "StructA">
+				<member name="foo" type="double"/>
+			</struct>
+			<struct name= "StructB">
+				<member name="foo" type="double"/>
+				<member name="bar" type="nonBasic"  nonBasicTypeName= "StructA"/>
+			</struct>
+		</module>
+	</types>
+	
+	<!-- QoS profiles-->
+	<qos_library name="MainQoSLibrary">
+		<qos_profile name="MainQoSProfile">
+			<topic_qos>
+				<deadline>
+					<period>
+						<sec>1</sec>
+					</period>
+				</deadline>
+			</topic_qos>
+		</qos_profile>
+		<qos_profile name="SecondaryQoSProfile">
+			<topic_qos>
+				<deadline>
+					<period>
+						<sec>2</sec>
+					</period>
+				</deadline>
+			</topic_qos>
+		</qos_profile>
+	</qos_library>
+
+    <domain_library name="MainDomainLibrary">
+		<domain name="Main" domain_id="1">
+			<register_type name="TempRegister" kind="dynamicData" type_ref="TemplateModule::StructB"/>
+				<topic name="template_topic" register_type_ref="Template">
+					<topic_qos name="TemplateQoS" base_name="Main::MainQoSProfile">
+					</topic_qos>
+				</topic>
+		</domain>
+    </domain_library>
+
+    
+    <participant_library name="MainParticipantLibrary">
+		<domain_participant name="MainParticipant" domain_ref="MainDomainLibrary::Main">
+			<publisher name="PublisherA">
+				<!--Data writers-->
+				<data_writer name="dataWriterA" topic_ref="template_topic">
+					<datawriter_qos name="writerQoS" base_name="MainQoSLibrary::MainQoSProfile">
+					</datawriter_qos>
+				</data_writer>
+				<!--Publisher QoS settings-->
+				<publisher_qos name="publisherQoS" base_name="MainQoSLibrary::MainQoSProfile">
+					<publisher_name>
+						<name>publisherA</name>
+						<role_name>publisher</role_name>
+					</publisher_name>
+				</publisher_qos>
+			</publisher>
+			<subscriber name="SubscriberB">
+				<!--Data readers-->
+				<data_reader name="dataReaderB" topic_ref="template_topic">
+					<datareader_qos name="readerQoS" base_name="MainQoSLibrary::MainQoSProfile">
+					</datareader_qos>
+				</data_reader>
+				<!--SubscriberQoS settings-->
+				<subscriber_qos name="SubscriberQoS" base_name="MainQoSLibrary::MainQoSProfile">
+				</subscriber_qos>
+			</subscriber>
+		</domain_participant>
+    </participant_library>
+</dds>
